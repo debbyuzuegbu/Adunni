@@ -97,8 +97,10 @@ All of this runs through the same database functions a real integration would us
 
 **Requirements:** Node.js 20+ and a free [Supabase](https://supabase.com) project.
 
-1. Install dependencies
+1. Clone the repo and install dependencies
    ```bash
+   git clone https://github.com/debbyuzuegbu/Adunni.git
+   cd Adunni
    npm install
    ```
 2. Create `.env.local` from the example and add your Supabase project URL and anon key (Project Settings → API)
