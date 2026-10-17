@@ -1,12 +1,16 @@
-import { Check, ChevronRight, LogOut, Mail, Monitor, Moon, Pencil, Phone, Sun, User, Wallet } from 'lucide-react'
-import { useState } from 'react'
+import { Camera, Check, Image as ImageIcon, Trash2, ChevronRight, LogOut, Mail, Monitor, Moon, Pencil, Phone, Sun, User, Wallet } from 'lucide-react'
+import { useCallback, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
+import { Avatar } from '../components/Avatar'
+import { CameraCapture } from '../components/CameraCapture'
+import { useRemoveAvatar, useUploadAvatar } from '../hooks/useAvatar'
 import { useGroups } from '../hooks/useGroups'
 import { useProfile } from '../hooks/useProfile'
 import { useUpdateProfile } from '../hooks/useUpdateProfile'
 import { useAuth } from '../lib/AuthContext'
 import { useConfirm } from '../lib/ConfirmContext'
-import { formatDate, formatNaira, initialsOf } from '../lib/format'
+import { formatDate, formatNaira } from '../lib/format'
 import { supabase } from '../lib/supabase'
 import { useTheme, type ThemePreference } from '../lib/ThemeContext'
 import { useToast } from '../lib/ToastContext'
@@ -31,6 +35,14 @@ export function Settings() {
   const confirm = useConfirm()
   const navigate = useNavigate()
   const { preference, setPreference } = useTheme()
+  const uploadAvatar = useUploadAvatar()
+  const removeAvatar = useRemoveAvatar()
+  const fileInput = useRef<HTMLInputElement>(null)
+  const cameraInput = useRef<HTMLInputElement>(null)
+  const [photoMenu, setPhotoMenu] = useState(false)
+  const [cameraOpen, setCameraOpen] = useState(false)
+  const closeCamera = useCallback(() => setCameraOpen(false), [])
+  const photoBusy = uploadAvatar.isPending || removeAvatar.isPending
   const [editing, setEditing] = useState(false)
   const [fullName, setFullName] = useState('')
   const [phone, setPhone] = useState('')
@@ -62,6 +74,45 @@ export function Settings() {
     }
   }
 
+  async function handlePhotoChosen(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (file) await uploadPhoto(file)
+  }
+
+  function takePhoto() {
+    setPhotoMenu(false)
+    if (window.matchMedia('(pointer: coarse)').matches) cameraInput.current?.click()
+    else setCameraOpen(true)
+  }
+
+  function choosePhoto() {
+    setPhotoMenu(false)
+    fileInput.current?.click()
+  }
+
+  async function uploadPhoto(file: File) {
+    setCameraOpen(false)
+    try {
+      await uploadAvatar.mutateAsync(file)
+      showToast('Profile photo updated', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "Couldn't upload your photo.")
+    }
+  }
+
+  async function handleRemovePhoto() {
+    setPhotoMenu(false)
+    const ok = await confirm({ title: 'Remove your photo?', message: 'Your initials will show instead.', confirmLabel: 'Remove', danger: true })
+    if (!ok) return
+    try {
+      await removeAvatar.mutateAsync()
+      showToast('Photo removed', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "Couldn't remove your photo.")
+    }
+  }
+
   async function handleLogout() {
     const ok = await confirm({ title: 'Log out?', confirmLabel: 'Log out', danger: true })
     if (!ok) return
@@ -80,11 +131,47 @@ export function Settings() {
   return (
     <div>
       <div className="flex flex-col items-center card px-4 pb-5 pt-6 text-center">
-        <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-xl font-extrabold text-brand-900">
-          {initialsOf(profile.full_name)}
-        </div>
+        <input ref={fileInput} type="file" accept="image/*" onChange={handlePhotoChosen} className="hidden" />
+        <input
+          ref={cameraInput}
+          type="file"
+          accept="image/*"
+          capture="user"
+          onChange={handlePhotoChosen}
+          className="hidden"
+        />
+        <button
+          type="button"
+          onClick={() => setPhotoMenu(true)}
+          disabled={photoBusy}
+          aria-label={profile.avatar_url ? 'Change profile photo' : 'Add profile photo'}
+          className="relative mb-3 rounded-full"
+        >
+          <Avatar
+            name={profile.full_name}
+            url={profile.avatar_url}
+            tone="gold"
+            className="h-20 w-20 text-2xl ring-4 ring-gold-100"
+          />
+          <span className="absolute -bottom-0.5 -right-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-green-600 text-white ring-[3px] ring-paper-raised">
+            <Camera size={13} strokeWidth={2.4} />
+          </span>
+          {photoBusy && (
+            <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40">
+              <span className="h-6 w-6 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+            </span>
+          )}
+        </button>
         <p className="m-0 text-lg font-bold">{profile.full_name || 'Add your name'}</p>
         <p className="m-0 mt-0.5 text-xs text-ink-soft">Member since {formatDate(profile.created_at)}</p>
+        <button
+          type="button"
+          onClick={() => setPhotoMenu(true)}
+          disabled={photoBusy}
+          className="mt-2 text-xs font-semibold text-green-600 disabled:opacity-50"
+        >
+          {profile.avatar_url ? 'Change photo' : 'Add photo'}
+        </button>
 
         <div className="mt-4 grid w-full grid-cols-3 divide-x divide-line rounded-xl bg-paper py-2.5">
           <div>
@@ -205,6 +292,37 @@ export function Settings() {
         {preference === 'system' ? "Matches your device's light or dark setting." : 'Saved on this device.'}
       </p>
 
+      {photoMenu &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-brand-900/40 p-4 backdrop-blur-[2px]"
+            onClick={() => setPhotoMenu(false)}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Profile photo"
+              onClick={(e) => e.stopPropagation()}
+              className="sheet-in card w-full max-w-xs p-2"
+            >
+              <p className="m-0 px-3 pb-2 pt-3 text-center text-sm font-bold">Profile photo</p>
+              <PhotoOption Icon={Camera} label="Take photo" onClick={takePhoto} />
+              <PhotoOption Icon={ImageIcon} label="Choose from library" onClick={choosePhoto} />
+              {profile.avatar_url && <PhotoOption Icon={Trash2} label="Remove photo" onClick={handleRemovePhoto} danger />}
+              <button
+                type="button"
+                onClick={() => setPhotoMenu(false)}
+                className="mt-1 w-full rounded-xl py-3 text-sm font-semibold text-ink-soft hover:bg-paper"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>,
+          document.body,
+        )}
+
+      {cameraOpen && <CameraCapture onCapture={uploadPhoto} onClose={closeCamera} />}
+
       <button
         type="button"
         onClick={handleLogout}
@@ -213,6 +331,37 @@ export function Settings() {
         <LogOut size={15} /> Log out
       </button>
     </div>
+  )
+}
+
+function PhotoOption({
+  Icon,
+  label,
+  onClick,
+  danger = false,
+}: {
+  Icon: typeof Camera
+  label: string
+  onClick: () => void
+  danger?: boolean
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold hover:bg-paper ${
+        danger ? 'text-danger' : ''
+      }`}
+    >
+      <span
+        className={`flex h-9 w-9 items-center justify-center rounded-full ${
+          danger ? 'bg-danger/10 text-danger' : 'bg-green-100 text-green-700'
+        }`}
+      >
+        <Icon size={17} />
+      </span>
+      {label}
+    </button>
   )
 }
 

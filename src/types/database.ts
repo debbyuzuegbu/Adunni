@@ -8,6 +8,7 @@ export type Profile = {
   full_name: string
   phone: string | null
   wallet_balance_kobo: number
+  avatar_url: string | null
   created_at: string
 }
 

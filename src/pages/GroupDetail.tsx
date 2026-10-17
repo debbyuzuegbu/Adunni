@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Avatar } from '../components/Avatar'
 import { StatusBadge } from '../components/StatusBadge'
 import {
   useCompleteCycle,
@@ -28,7 +29,7 @@ import { useGroupDetail, type GroupDetailData, type MemberWithProfile } from '..
 import { useAuth } from '../lib/AuthContext'
 import { useConfirm } from '../lib/ConfirmContext'
 import { useToast } from '../lib/ToastContext'
-import { daysUntil, describeDue, formatDate, formatNaira, initialsOf, todayIso } from '../lib/format'
+import { daysUntil, describeDue, formatDate, formatNaira, todayIso } from '../lib/format'
 import { PageSkeleton } from '../components/Loading'
 
 const sectionLabel = 'mb-2.5 section-label'
@@ -43,14 +44,6 @@ function memberName(member: MemberWithProfile | undefined, myId: string | undefi
   if (!member) return 'Unknown'
   if (member.profile_id === myId) return 'You'
   return member.profile?.full_name || 'Member'
-}
-
-function Avatar({ name }: { name: string | null | undefined }) {
-  return (
-    <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700">
-      {initialsOf(name)}
-    </div>
-  )
 }
 
 export function GroupDetail() {
@@ -304,7 +297,7 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
           return (
             <div key={member.id} className="flex items-center gap-2.5 border-b border-line p-3 last:border-b-0">
               <span className="w-5 text-center font-mono text-xs font-bold text-ink-soft">{i + 1}</span>
-              <Avatar name={member.profile?.full_name} />
+              <Avatar name={member.profile?.full_name} url={member.profile?.avatar_url} />
               <div className="min-w-0 flex-1">
                 <p className="m-0 truncate text-sm font-semibold">{memberName(member, user?.id)}</p>
                 <p className="m-0 text-xs text-ink-soft">
@@ -476,7 +469,7 @@ function ActiveView({ data, isCreator }: { data: GroupDetailData; isCreator: boo
 
           return (
             <div key={member.id} className="flex items-center gap-2.5 border-b border-line p-3 last:border-b-0">
-              <Avatar name={member.profile?.full_name} />
+              <Avatar name={member.profile?.full_name} url={member.profile?.avatar_url} />
               <div className="min-w-0 flex-1">
                 <p className="m-0 truncate text-sm font-semibold">
                   {memberName(member, user?.id)}

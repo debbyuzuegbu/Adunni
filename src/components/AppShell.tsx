@@ -1,7 +1,7 @@
 import { Home as HomeIcon, Receipt, Settings as SettingsIcon, Users, Wallet } from 'lucide-react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useProfile } from '../hooks/useProfile'
-import { initialsOf } from '../lib/format'
+import { Avatar } from './Avatar'
 
 const tabs = [
   { to: '/', label: 'Home', Icon: HomeIcon, end: true },
@@ -33,12 +33,8 @@ export function AppShell() {
             <p className="m-0 text-xs font-medium text-white/70">{greeting()},</p>
             <p className="m-0 text-lg font-bold tracking-tight">{firstName} 👋</p>
           </div>
-          <Link
-            to="/settings"
-            aria-label="Profile"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-sm font-extrabold text-brand-900 ring-4 ring-white/10"
-          >
-            {initialsOf(profile?.full_name)}
+          <Link to="/settings" aria-label="Profile" className="rounded-full ring-4 ring-white/10">
+            <Avatar name={profile?.full_name} url={profile?.avatar_url} tone="gold" className="h-10 w-10 text-sm" />
           </Link>
         </div>
       </header>
