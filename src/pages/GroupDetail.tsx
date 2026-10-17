@@ -202,7 +202,6 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
   const slotsTotal = group.member_count
   const busy = moveMember.isPending || removeMember.isPending
   const inviteUrl = `${window.location.origin}/join/${group.invite_code}`
-  const inviteText = `Join my savings circle "${group.name}" on Adunni`
 
   async function handleCopy() {
     await navigator.clipboard.writeText(group.invite_code!)
@@ -213,12 +212,12 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
   async function handleShare() {
     if (navigator.share) {
       try {
-        await navigator.share({ text: inviteText, url: inviteUrl })
+        await navigator.share({ url: inviteUrl })
       } catch {
         return
       }
     } else {
-      await navigator.clipboard.writeText(`${inviteText}: ${inviteUrl}`)
+      await navigator.clipboard.writeText(inviteUrl)
       showToast('Invite link copied', 'success')
     }
   }
