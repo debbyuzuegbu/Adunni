@@ -1,14 +1,15 @@
 import { ArrowLeft } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useJoinGroup } from '../hooks/useJoinGroup'
 import { useToast } from '../lib/ToastContext'
 
 export function JoinGroup() {
   const navigate = useNavigate()
+  const params = useParams<{ code: string }>()
   const joinGroup = useJoinGroup()
   const { showToast } = useToast()
-  const [code, setCode] = useState('')
+  const [code, setCode] = useState((params.code ?? '').toUpperCase().slice(0, 6))
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -32,7 +33,9 @@ export function JoinGroup() {
 
       <h1 className="m-0 mb-2 text-lg font-bold">Join a circle</h1>
       <p className="m-0 mb-5 text-sm text-ink-soft">
-        Enter the invite code someone shared with you.
+        {params.code
+          ? 'You were invited to a savings circle. Check the code and tap Join.'
+          : 'Enter the invite code someone shared with you.'}
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

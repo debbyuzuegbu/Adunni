@@ -27,6 +27,7 @@ function App() {
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/new" element={<CreateGroup />} />
           <Route path="/groups/join" element={<JoinGroup />} />
+          <Route path="/join/:code" element={<JoinGroup />} />
           <Route path="/groups/:groupId" element={<GroupDetail />} />
           <Route path="/groups/:groupId/edit" element={<EditGroup />} />
           <Route path="/groups/:groupId/pay" element={<Pay />} />
