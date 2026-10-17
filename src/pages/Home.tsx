@@ -4,6 +4,7 @@ import { GroupCard } from '../components/GroupCard'
 import { useGroups } from '../hooks/useGroups'
 import { daysUntil, describeDue, formatDate, formatNaira } from '../lib/format'
 import { GroupCardsSkeleton } from '../components/Loading'
+import { EmptyState } from '../components/EmptyState'
 
 export function Home() {
   const { data, isLoading, error } = useGroups()
@@ -93,7 +94,11 @@ export function Home() {
       {isLoading && <GroupCardsSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your groups. Try again shortly.</p>}
       {!isLoading && !error && groups?.length === 0 && (
-        <p className="text-sm text-ink-soft">You haven't joined any circles yet.</p>
+        <EmptyState
+          Icon={Users}
+          title="No circles yet"
+          message="Start a savings circle with people you trust, or join one with an invite code."
+        />
       )}
 
       {groups?.map((group, i) => <GroupCard key={group.id} group={group} index={i} />)}

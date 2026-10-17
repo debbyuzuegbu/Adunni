@@ -1,4 +1,4 @@
-import { ArrowDownLeft, ArrowUpRight, Plus, Trophy } from 'lucide-react'
+import { ArrowDownLeft, ArrowUpRight, Plus, Trophy, Wallet as WalletIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { TestModeBadge } from '../components/TestModeBadge'
@@ -8,6 +8,7 @@ import { formatDate, formatNaira } from '../lib/format'
 import { useToast } from '../lib/ToastContext'
 import type { WalletTransactionKind } from '../types/database'
 import { ListSkeleton } from '../components/Loading'
+import { EmptyState } from '../components/EmptyState'
 
 const presets = [5_000, 20_000, 50_000, 100_000]
 
@@ -130,7 +131,11 @@ export function Wallet() {
       {isLoading && <ListSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your wallet activity.</p>}
       {!isLoading && !error && transactions?.length === 0 && (
-        <p className="text-sm text-ink-soft">No activity yet. Add money to get started.</p>
+        <EmptyState
+          Icon={WalletIcon}
+          title="No activity yet"
+          message="Top-ups, contributions and payouts will show up here."
+        />
       )}
       {transactions && transactions.length > 0 && (
         <div className="card">

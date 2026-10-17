@@ -1,9 +1,10 @@
-import { AlertCircle, Check, Clock } from 'lucide-react'
+import { AlertCircle, Check, Clock, Receipt } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContributionHistory } from '../hooks/useContributionHistory'
 import { daysUntil, formatDate, formatNaira } from '../lib/format'
 import { ListSkeleton } from '../components/Loading'
+import { EmptyState } from '../components/EmptyState'
 
 export function History() {
   const { data: entries, isLoading, error } = useContributionHistory()
@@ -18,16 +19,18 @@ export function History() {
 
   return (
     <div>
-      <div className="mb-4 grid grid-cols-2 gap-2.5">
-        <div className="card p-3.5">
-          <p className="m-0 text-xs text-ink-soft">Paid</p>
-          <p className="m-0 font-mono text-lg font-bold text-green-600">{formatNaira(paidTotal)}</p>
+      {(entries?.length ?? 0) > 0 && (
+        <div className="mb-4 grid grid-cols-2 gap-2.5">
+          <div className="card p-3.5">
+            <p className="m-0 text-xs text-ink-soft">Paid</p>
+            <p className="m-0 font-mono text-lg font-bold text-green-600">{formatNaira(paidTotal)}</p>
+          </div>
+          <div className="card p-3.5">
+            <p className="m-0 text-xs text-ink-soft">Outstanding</p>
+            <p className="m-0 font-mono text-lg font-bold">{formatNaira(outstandingTotal)}</p>
+          </div>
         </div>
-        <div className="card p-3.5">
-          <p className="m-0 text-xs text-ink-soft">Outstanding</p>
-          <p className="m-0 font-mono text-lg font-bold">{formatNaira(outstandingTotal)}</p>
-        </div>
-      </div>
+      )}
 
       {groupOptions.length > 1 && (
         <select
@@ -47,7 +50,12 @@ export function History() {
       {isLoading && <ListSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your history.</p>}
       {!isLoading && !error && visible.length === 0 && (
-        <p className="text-sm text-ink-soft">No contributions yet. They'll show up once a circle starts.</p>
+        <EmptyState
+          Icon={Receipt}
+          title="No contributions yet"
+          message="Your payments will appear here once one of your circles starts."
+          action={{ to: '/groups', label: 'View my circles' }}
+        />
       )}
 
       {outstanding.length > 0 && (

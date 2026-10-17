@@ -1,10 +1,11 @@
-import { KeyRound, Search, Users } from 'lucide-react'
+import { KeyRound, Search, SearchX, Users } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { GroupCard } from '../components/GroupCard'
 import { useGroups } from '../hooks/useGroups'
 import type { GroupStatus } from '../types/database'
 import { GroupCardsSkeleton } from '../components/Loading'
+import { EmptyState } from '../components/EmptyState'
 
 const filters: { key: 'all' | GroupStatus; label: string }[] = [
   { key: 'all', label: 'All' },
@@ -74,9 +75,15 @@ export function Groups() {
       {isLoading && <GroupCardsSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your groups. Try again shortly.</p>}
       {!isLoading && !error && groups.length === 0 && (
-        <p className="text-sm text-ink-soft">
-          {data?.groups.length ? 'No circles match.' : "You haven't joined any circles yet."}
-        </p>
+        data?.groups.length ? (
+          <EmptyState Icon={SearchX} title="No circles match" message="Try a different name or filter." />
+        ) : (
+          <EmptyState
+            Icon={Users}
+            title="No circles yet"
+            message="Start a savings circle with people you trust, or join one with an invite code."
+          />
+        )
       )}
 
       {groups.map((group, i) => <GroupCard key={group.id} group={group} index={i} />)}
