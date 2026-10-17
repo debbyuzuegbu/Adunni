@@ -336,7 +336,7 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
                       disabled={busy}
                       onClick={() => handleRemove(member)}
                       aria-label="Remove member"
-                      className="rounded-md p-1.5 text-danger hover:bg-red-50 disabled:opacity-30"
+                      className="rounded-md p-1.5 text-danger hover:bg-danger/10 disabled:opacity-30"
                     >
                       <UserMinus size={14} />
                     </button>
@@ -379,7 +379,7 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
           )}
         </div>
       ) : (
-        <div className="mb-4 rounded-xl border border-[#ecd6a8] bg-gold-100 p-3.5 text-xs text-[#7a5a15]">
+        <div className="mb-4 rounded-xl border border-gold-line bg-gold-100 p-3.5 text-xs text-gold-ink">
           Waiting for the organizer to start the circle. You'll see the schedule here once it begins.
         </div>
       )}

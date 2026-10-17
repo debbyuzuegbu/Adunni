@@ -23,7 +23,7 @@ export function Home() {
 
   return (
     <div>
-      <div className="mb-4 rounded-[1.375rem] bg-gradient-to-br from-green-600 to-green-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-5 text-white">
+      <div className="mb-4 rounded-[1.375rem] bg-gradient-to-br from-brand-600 to-brand-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-5 text-white">
         <p className="m-0 mb-1.5 text-xs opacity-75">Total saved across groups</p>
         <p className="m-0 mb-3.5 font-mono text-3xl font-bold tabular-nums">{formatNaira(totalSaved)}</p>
         <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/20">
@@ -45,7 +45,7 @@ export function Home() {
       {nextPayout && (
         <Link
           to={`/groups/${nextPayout.id}`}
-          className="mb-4 flex items-center gap-3 rounded-2xl border border-[#ecd6a8] bg-gold-100 p-3.5"
+          className="mb-4 flex items-center gap-3 rounded-2xl border border-gold-line bg-gold-100 p-3.5"
         >
           <Trophy size={20} className="shrink-0 text-gold-600" />
           <span className="flex-1 text-sm">

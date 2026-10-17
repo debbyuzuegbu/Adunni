@@ -25,7 +25,7 @@ export function AppShell() {
 
   return (
     <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-paper sm:my-6 sm:h-[calc(100dvh-3rem)] sm:rounded-[2rem] sm:border sm:border-line sm:shadow-[0_30px_80px_-30px_rgb(6_56_31/0.35)]">
-      <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-green-700 to-green-900 px-5 pb-6 pt-7 text-white">
+      <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900 px-5 pb-6 pt-7 text-white">
         <div className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-white/[0.06]" />
         <div className="pointer-events-none absolute -bottom-20 right-16 h-36 w-36 rounded-full bg-gold-500/10" />
         <div className="relative flex items-center justify-between">
@@ -36,7 +36,7 @@ export function AppShell() {
           <Link
             to="/settings"
             aria-label="Profile"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-sm font-extrabold text-green-900 ring-4 ring-white/10"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-sm font-extrabold text-brand-900 ring-4 ring-white/10"
           >
             {initialsOf(profile?.full_name)}
           </Link>

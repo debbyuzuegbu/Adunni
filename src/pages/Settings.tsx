@@ -1,4 +1,4 @@
-import { Check, ChevronRight, LogOut, Mail, Pencil, Phone, User, Wallet } from 'lucide-react'
+import { Check, ChevronRight, LogOut, Mail, Monitor, Moon, Pencil, Phone, Sun, User, Wallet } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useGroups } from '../hooks/useGroups'
@@ -8,7 +8,14 @@ import { useAuth } from '../lib/AuthContext'
 import { useConfirm } from '../lib/ConfirmContext'
 import { formatDate, formatNaira, initialsOf } from '../lib/format'
 import { supabase } from '../lib/supabase'
+import { useTheme, type ThemePreference } from '../lib/ThemeContext'
 import { useToast } from '../lib/ToastContext'
+
+const themeOptions: { value: ThemePreference; label: string; Icon: typeof Sun }[] = [
+  { value: 'light', label: 'Light', Icon: Sun },
+  { value: 'dark', label: 'Dark', Icon: Moon },
+  { value: 'system', label: 'System', Icon: Monitor },
+]
 
 const sectionLabel = 'mb-2.5 mt-5 section-label'
 const inputClass =
@@ -22,6 +29,7 @@ export function Settings() {
   const { showToast } = useToast()
   const confirm = useConfirm()
   const navigate = useNavigate()
+  const { preference, setPreference } = useTheme()
   const [editing, setEditing] = useState(false)
   const [fullName, setFullName] = useState('')
   const [phone, setPhone] = useState('')
@@ -71,7 +79,7 @@ export function Settings() {
   return (
     <div>
       <div className="flex flex-col items-center card px-4 pb-5 pt-6 text-center">
-        <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-xl font-extrabold text-green-900">
+        <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-xl font-extrabold text-brand-900">
           {initialsOf(profile.full_name)}
         </div>
         <p className="m-0 text-lg font-bold">{profile.full_name || 'Add your name'}</p>
@@ -95,7 +103,7 @@ export function Settings() {
 
       <Link
         to="/wallet"
-        className="mt-3 flex items-center gap-3 rounded-[1.375rem] bg-gradient-to-br from-green-600 to-green-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-4 text-white hover:opacity-95"
+        className="mt-3 flex items-center gap-3 rounded-[1.375rem] bg-gradient-to-br from-brand-600 to-brand-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-4 text-white hover:opacity-95"
       >
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
           <Wallet size={18} />
@@ -116,7 +124,7 @@ export function Settings() {
       </Link>
 
       <div className="flex items-center justify-between">
-        <p className={sectionLabel}>Personal details</p>
+        <p className={sectionLabel}>Profile settings</p>
         {!editing && (
           <button
             type="button"
@@ -169,6 +177,32 @@ export function Settings() {
           <DetailRow Icon={Mail} label="Email" value={user?.email ?? ''} />
         </div>
       )}
+
+      <p className={sectionLabel}>Appearance</p>
+      <div className="card p-1.5">
+        <div className="grid grid-cols-3 gap-1">
+          {themeOptions.map(({ value, label, Icon }) => {
+            const selected = preference === value
+            return (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setPreference(value)}
+                aria-pressed={selected}
+                className={`flex flex-col items-center gap-1.5 rounded-[0.8rem] py-3 text-xs font-semibold ${
+                  selected ? 'bg-green-100 text-green-700' : 'text-ink-soft hover:bg-paper'
+                }`}
+              >
+                <Icon size={18} strokeWidth={selected ? 2.4 : 2} />
+                {label}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+      <p className="m-0 mt-2 px-1 text-xs text-ink-soft">
+        {preference === 'system' ? "Matches your device's light or dark setting." : 'Saved on this device.'}
+      </p>
 
       <button
         type="button"

@@ -13,7 +13,7 @@ const presets = [5_000, 20_000, 50_000, 100_000]
 const kindStyle: Record<WalletTransactionKind, { Icon: typeof Plus; className: string; label: string }> = {
   top_up: { Icon: ArrowDownLeft, className: 'bg-green-100 text-green-700', label: 'Top-up' },
   contribution: { Icon: ArrowUpRight, className: 'bg-gold-100 text-gold-600', label: 'Contribution' },
-  payout: { Icon: Trophy, className: 'bg-[#eee7fb] text-[#6c4bd6]', label: 'Payout' },
+  payout: { Icon: Trophy, className: 'bg-purple-100 text-purple-600', label: 'Payout' },
 }
 
 export function Wallet() {
@@ -48,7 +48,7 @@ export function Wallet() {
 
   return (
     <div>
-      <div className="mb-4 rounded-[1.375rem] bg-gradient-to-br from-green-600 to-green-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-5 text-white">
+      <div className="mb-4 rounded-[1.375rem] bg-gradient-to-br from-brand-600 to-brand-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-5 text-white">
         <div className="mb-1.5 flex items-center justify-between">
           <p className="m-0 text-xs opacity-75">Wallet balance</p>
           <TestModeBadge />
@@ -70,7 +70,7 @@ export function Wallet() {
           <button
             type="button"
             onClick={() => setShowTopUp(true)}
-            className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl bg-white py-2.5 text-sm font-bold text-green-700 hover:bg-green-50"
+            className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl bg-white py-2.5 text-sm font-bold text-brand-700 hover:bg-white/90"
           >
             <Plus size={16} strokeWidth={3} /> Add money
           </button>

@@ -12,6 +12,16 @@
   --color-gold-500: #f2a93b;
   --color-gold-600: #d98f22;
 
+  --color-gold-line: #ecd6a8;
+  --color-gold-ink: #7a5a15;
+
+  --color-purple-100: #eee7fb;
+  --color-purple-600: #6c4bd6;
+
+  --color-brand-600: #128a4a;
+  --color-brand-700: #0b6b3a;
+  --color-brand-900: #06381f;
+
   --color-ink: #17201b;
   --color-ink-soft: #5d6862;
   --color-paper: #f6f5f0;
@@ -28,6 +38,41 @@
 
 :root {
   color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-green-50: #142a1e;
+  --color-green-100: #183626;
+  --color-green-500: #36c477;
+  --color-green-600: #1f9a56;
+  --color-green-700: #6fd59d;
+
+  --color-gold-100: #2f2614;
+  --color-gold-600: #f3b456;
+  --color-gold-line: #4a3a1c;
+  --color-gold-ink: #f1cf8f;
+
+  --color-purple-100: #261f3d;
+  --color-purple-600: #b6a2ff;
+
+  --color-ink: #e9efeb;
+  --color-ink-soft: #9caaa2;
+  --color-paper: #0e1411;
+  --color-paper-raised: #161e1a;
+  --color-line: #253029;
+  --color-danger: #ec7a68;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 16px 36px -12px rgb(0 0 0 / 0.6);
+}
+
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgb(54 196 119 / 0.07), transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, rgb(242 169 59 / 0.05), transparent 60%),
+    var(--color-paper);
 }
 
 body {
@@ -83,7 +128,7 @@ h1, h2, h3 {
   }
 
   .field::placeholder {
-    color: rgb(93 104 98 / 0.55);
+    color: color-mix(in srgb, var(--color-ink-soft) 60%, transparent);
   }
 
   .field:focus {
@@ -96,7 +141,7 @@ h1, h2, h3 {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgb(93 104 98 / 0.85);
+    color: color-mix(in srgb, var(--color-ink-soft) 90%, transparent);
   }
 }
 

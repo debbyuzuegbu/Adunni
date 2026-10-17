@@ -7,7 +7,7 @@ import { StatusBadge } from './StatusBadge'
 const groupIconPalette = [
   { Icon: PartyPopper, bg: 'bg-gold-100', fg: 'text-gold-600' },
   { Icon: HomeIcon, bg: 'bg-green-100', fg: 'text-green-700' },
-  { Icon: BookOpen, bg: 'bg-[#eee7fb]', fg: 'text-[#6c4bd6]' },
+  { Icon: BookOpen, bg: 'bg-purple-100', fg: 'text-purple-600' },
 ]
 
 export function GroupCard({ group, index }: { group: GroupSummary; index: number }) {
