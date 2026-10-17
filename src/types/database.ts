@@ -9,6 +9,29 @@ export type Profile = {
   phone: string | null
   wallet_balance_kobo: number
   avatar_url: string | null
+  email_reminders: boolean
+  created_at: string
+}
+
+export type NotificationKind =
+  | 'due_soon'
+  | 'overdue'
+  | 'member_paid'
+  | 'payout_upcoming'
+  | 'payout_received'
+  | 'circle_started'
+  | 'member_joined'
+
+export type AppNotification = {
+  id: string
+  profile_id: string
+  kind: NotificationKind
+  title: string
+  body: string
+  group_id: string | null
+  dedupe_key: string | null
+  read_at: string | null
+  emailed_at: string | null
   created_at: string
 }
 
@@ -132,6 +155,12 @@ export interface Database {
         Update: never
         Relationships: []
       }
+      notifications: {
+        Row: AppNotification
+        Insert: never
+        Update: { read_at?: string | null }
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: {
@@ -166,6 +195,10 @@ export interface Database {
       mock_top_up_wallet: {
         Args: { amount_kobo: number }
         Returns: Profile
+      }
+      refresh_my_reminders: {
+        Args: Record<string, never>
+        Returns: undefined
       }
       mock_pay_contribution: {
         Args: { target_contribution: string; pay_method: PaymentMethod }

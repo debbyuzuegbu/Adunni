@@ -1,4 +1,4 @@
-import { Camera, Check, Image as ImageIcon, Trash2, ChevronRight, LogOut, Mail, Monitor, Moon, Pencil, Phone, Sun, User, Wallet } from 'lucide-react'
+import { Bell, Camera, Check, Image as ImageIcon, Trash2, ChevronRight, LogOut, Mail, Monitor, Moon, Pencil, Phone, Sun, User, Wallet } from 'lucide-react'
 import { useCallback, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,6 +6,7 @@ import { Avatar } from '../components/Avatar'
 import { CameraCapture } from '../components/CameraCapture'
 import { useRemoveAvatar, useUploadAvatar } from '../hooks/useAvatar'
 import { useGroups } from '../hooks/useGroups'
+import { useSetEmailReminders } from '../hooks/useNotifications'
 import { useProfile } from '../hooks/useProfile'
 import { useUpdateProfile } from '../hooks/useUpdateProfile'
 import { useAuth } from '../lib/AuthContext'
@@ -37,6 +38,7 @@ export function Settings() {
   const { preference, setPreference } = useTheme()
   const uploadAvatar = useUploadAvatar()
   const removeAvatar = useRemoveAvatar()
+  const setEmailReminders = useSetEmailReminders()
   const fileInput = useRef<HTMLInputElement>(null)
   const cameraInput = useRef<HTMLInputElement>(null)
   const [photoMenu, setPhotoMenu] = useState(false)
@@ -110,6 +112,15 @@ export function Settings() {
       showToast('Photo removed', 'success')
     } catch (err) {
       showToast(err instanceof Error ? err.message : "Couldn't remove your photo.")
+    }
+  }
+
+  async function handleEmailReminders(enabled: boolean) {
+    try {
+      await setEmailReminders.mutateAsync(enabled)
+      showToast(enabled ? 'Email reminders on' : 'Email reminders off', 'success')
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : "Couldn't update your preference.")
     }
   }
 
@@ -265,6 +276,35 @@ export function Settings() {
           <DetailRow Icon={Mail} label="Email" value={user?.email ?? ''} />
         </div>
       )}
+
+      <p className={sectionLabel}>Notifications</p>
+      <div className="card">
+        <Link to="/notifications" className="flex items-center gap-3 border-b border-line p-3.5">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-700">
+            <Bell size={15} />
+          </span>
+          <span className="flex-1 text-sm font-semibold">View notifications</span>
+          <ChevronRight size={16} className="text-ink-soft" />
+        </Link>
+        <label className="flex cursor-pointer items-center gap-3 p-3.5">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-700">
+            <Mail size={15} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-semibold">Email reminders</span>
+            <span className="block text-xs text-ink-soft">Due dates, overdue payments and upcoming payouts</span>
+          </span>
+          <input
+            type="checkbox"
+            role="switch"
+            checked={profile.email_reminders}
+            disabled={setEmailReminders.isPending}
+            onChange={(e) => handleEmailReminders(e.target.checked)}
+            className="peer sr-only"
+          />
+          <span className="relative h-6 w-11 shrink-0 rounded-full bg-line transition-colors peer-checked:bg-green-600 peer-focus-visible:ring-2 peer-focus-visible:ring-green-500 peer-focus-visible:ring-offset-2 after:absolute after:left-0.5 after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5" />
+        </label>
+      </div>
 
       <p className={sectionLabel}>Appearance</p>
       <div className="card p-1.5">

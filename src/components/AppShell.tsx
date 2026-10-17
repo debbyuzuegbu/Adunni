@@ -1,5 +1,6 @@
-import { Home as HomeIcon, Receipt, Settings as SettingsIcon, Users, Wallet } from 'lucide-react'
+import { Bell, Home as HomeIcon, Receipt, Settings as SettingsIcon, Users, Wallet } from 'lucide-react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useNotificationSync, useUnreadCount } from '../hooks/useNotifications'
 import { useProfile } from '../hooks/useProfile'
 import { Avatar } from './Avatar'
 
@@ -21,6 +22,8 @@ function greeting() {
 export function AppShell() {
   const { data: profile } = useProfile()
   const location = useLocation()
+  const unread = useUnreadCount()
+  useNotificationSync()
   const firstName = profile?.full_name?.trim().split(' ')[0] || 'there'
 
   return (
@@ -33,9 +36,23 @@ export function AppShell() {
             <p className="m-0 text-xs font-medium text-white/70">{greeting()},</p>
             <p className="m-0 text-lg font-bold tracking-tight">{firstName} 👋</p>
           </div>
-          <Link to="/settings" aria-label="Profile" className="rounded-full ring-4 ring-white/10">
-            <Avatar name={profile?.full_name} url={profile?.avatar_url} tone="gold" className="h-10 w-10 text-sm" />
-          </Link>
+          <div className="flex items-center gap-2.5">
+            <Link
+              to="/notifications"
+              aria-label={unread > 0 ? `Notifications, ${unread} unread` : 'Notifications'}
+              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/15"
+            >
+              <Bell size={18} />
+              {unread > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-gold-500 px-1 text-[0.62rem] font-extrabold text-brand-900 ring-2 ring-brand-700">
+                  {unread > 9 ? '9+' : unread}
+                </span>
+              )}
+            </Link>
+            <Link to="/settings" aria-label="Profile" className="rounded-full ring-4 ring-white/10">
+              <Avatar name={profile?.full_name} url={profile?.avatar_url} tone="gold" className="h-10 w-10 text-sm" />
+            </Link>
+          </div>
         </div>
       </header>
 

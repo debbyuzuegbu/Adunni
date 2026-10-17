@@ -9,6 +9,7 @@ import { History } from './pages/History'
 import { Home } from './pages/Home'
 import { JoinGroup } from './pages/JoinGroup'
 import { Login } from './pages/Login'
+import { Notifications } from './pages/Notifications'
 import { Pay } from './pages/Pay'
 import { PaySuccess } from './pages/PaySuccess'
 import { Settings } from './pages/Settings'
@@ -33,6 +34,7 @@ function App() {
           <Route path="/groups/:groupId/pay" element={<Pay />} />
           <Route path="/groups/:groupId/pay/success" element={<PaySuccess />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
