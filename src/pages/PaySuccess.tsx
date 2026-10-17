@@ -27,7 +27,7 @@ export function PaySuccess() {
       </p>
 
       {state?.reference && (
-        <div className="mb-6 w-full rounded-2xl border border-line bg-paper-raised p-4 text-left text-sm">
+        <div className="mb-6 w-full card p-4 text-left text-sm">
           <div className="flex justify-between py-1">
             <span className="text-ink-soft">Reference</span>
             <span className="font-mono font-semibold">{state.reference}</span>

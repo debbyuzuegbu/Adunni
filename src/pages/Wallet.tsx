@@ -48,7 +48,7 @@ export function Wallet() {
 
   return (
     <div>
-      <div className="mb-4 rounded-2xl bg-gradient-to-br from-green-600 to-green-900 p-5 text-white">
+      <div className="mb-4 rounded-[1.375rem] bg-gradient-to-br from-green-600 to-green-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-5 text-white">
         <div className="mb-1.5 flex items-center justify-between">
           <p className="m-0 text-xs opacity-75">Wallet balance</p>
           <TestModeBadge />
@@ -125,14 +125,14 @@ export function Wallet() {
         </form>
       )}
 
-      <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-ink-soft">Activity</p>
+      <p className="mb-2.5 section-label">Activity</p>
       {isLoading && <p className="text-sm text-ink-soft">Loading…</p>}
       {error && <p className="text-sm text-danger">Couldn't load your wallet activity.</p>}
       {!isLoading && !error && transactions?.length === 0 && (
         <p className="text-sm text-ink-soft">No activity yet. Add money to get started.</p>
       )}
       {transactions && transactions.length > 0 && (
-        <div className="rounded-2xl border border-line bg-paper-raised">
+        <div className="card">
           {transactions.map((t) => {
             const { Icon, className, label } = kindStyle[t.kind]
             const incoming = t.amount_kobo > 0

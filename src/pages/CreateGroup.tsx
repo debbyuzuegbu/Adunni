@@ -46,17 +46,17 @@ export function CreateGroup() {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">Group name</span>
+          <span className="mb-1.5 block section-label">Group name</span>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="December Trip Fund"
-            className="w-full rounded-2xl border border-line bg-paper-raised p-3.5 text-sm outline-none focus:border-green-500"
+            className="field text-sm outline-none focus:border-green-500"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">
+          <span className="mb-1.5 block section-label">
             Contribution amount (₦)
           </span>
           <input
@@ -65,7 +65,7 @@ export function CreateGroup() {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="20000"
-            className="w-full rounded-2xl border border-line bg-paper-raised p-3.5 font-mono text-sm outline-none focus:border-green-500"
+            className="field font-mono text-sm outline-none focus:border-green-500"
           />
         </label>
 
@@ -87,18 +87,18 @@ export function CreateGroup() {
         </div>
 
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">Members</span>
+          <span className="mb-1.5 block section-label">Members</span>
           <input
             type="number"
             min={2}
             value={memberCount}
             onChange={(e) => setMemberCount(e.target.value)}
             placeholder="10"
-            className="w-full rounded-2xl border border-line bg-paper-raised p-3.5 text-sm outline-none focus:border-green-500"
+            className="field text-sm outline-none focus:border-green-500"
           />
         </label>
 
-        <div className="rounded-2xl border border-line bg-paper-raised p-3.5 text-sm text-ink-soft">
+        <div className="card p-3.5 text-sm text-ink-soft">
           Payout order follows join order. You can rearrange or randomize it before starting, then it's locked.
         </div>
 

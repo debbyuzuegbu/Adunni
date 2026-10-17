@@ -23,7 +23,7 @@ export function Home() {
 
   return (
     <div>
-      <div className="mb-4 rounded-2xl bg-gradient-to-br from-green-600 to-green-900 p-5 text-white">
+      <div className="mb-4 rounded-[1.375rem] bg-gradient-to-br from-green-600 to-green-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-5 text-white">
         <p className="m-0 mb-1.5 text-xs opacity-75">Total saved across groups</p>
         <p className="m-0 mb-3.5 font-mono text-3xl font-bold tabular-nums">{formatNaira(totalSaved)}</p>
         <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/20">
@@ -62,8 +62,8 @@ export function Home() {
 
       {dueSoon.length > 0 && (
         <>
-          <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-ink-soft">Due this cycle</p>
-          <div className="mb-4 rounded-2xl border border-line bg-paper-raised">
+          <p className="mb-2.5 section-label">Due this cycle</p>
+          <div className="mb-4 card">
             {dueSoon.map((g) => {
               const overdue = daysUntil(g.currentDueDate!) < 0
               return (
@@ -87,7 +87,7 @@ export function Home() {
         </>
       )}
 
-      <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-ink-soft">Your groups</p>
+      <p className="mb-2.5 section-label">Your groups</p>
 
       {isLoading && <p className="text-sm text-ink-soft">Loading your groups…</p>}
       {error && <p className="text-sm text-danger">Couldn't load your groups. Try again shortly.</p>}

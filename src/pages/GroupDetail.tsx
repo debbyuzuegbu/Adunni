@@ -30,8 +30,8 @@ import { useConfirm } from '../lib/ConfirmContext'
 import { useToast } from '../lib/ToastContext'
 import { daysUntil, describeDue, formatDate, formatNaira, initialsOf, todayIso } from '../lib/format'
 
-const sectionLabel = 'mb-2.5 text-xs font-bold uppercase tracking-wide text-ink-soft'
-const card = 'rounded-2xl border border-line bg-paper-raised'
+const sectionLabel = 'mb-2.5 section-label'
+const card = 'card'
 
 function errorMessage(err: unknown, fallback: string) {
   if (err && typeof err === 'object' && 'message' in err && typeof err.message === 'string') return err.message
@@ -269,7 +269,7 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
       {group.invite_code && (
         <div className={`${card} mb-2.5 flex items-center justify-between border-dashed p-3.5`}>
           <span>
-            <span className="block text-xs font-bold uppercase tracking-wide text-ink-soft">Invite code</span>
+            <span className="block section-label">Invite code</span>
             <span className="font-mono text-lg font-bold tracking-[0.3em]">{group.invite_code}</span>
           </span>
           <span className="flex gap-3">
@@ -352,14 +352,14 @@ function DraftView({ data, isCreator }: { data: GroupDetailData; isCreator: bool
         <div className={`${card} mb-4 p-4`}>
           <p className="m-0 mb-3 text-sm font-bold">Start the circle</p>
           <label className="mb-3 block">
-            <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">
+            <span className="mb-1.5 block section-label">
               First contribution due
             </span>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="w-full rounded-xl border border-line bg-paper p-3 text-sm outline-none focus:border-green-500"
+              className="field text-sm outline-none focus:border-green-500"
             />
           </label>
           <label className="mb-3 flex items-center gap-2 text-sm">
@@ -441,7 +441,7 @@ function ActiveView({ data, isCreator }: { data: GroupDetailData; isCreator: boo
       <div className={`${card} mb-4 p-4`}>
         <div className="mb-3 flex items-start justify-between">
           <div>
-            <p className="m-0 text-xs font-bold uppercase tracking-wide text-ink-soft">
+            <p className="m-0 section-label">
               Cycle {group.current_cycle} of {group.member_count}
             </p>
             <p className="m-0 mt-1 text-sm">
@@ -560,7 +560,7 @@ function Commitment({ data }: { data: GroupDetailData }) {
 
   return (
     <div className={`${card} mb-4 p-4`}>
-      <p className="m-0 mb-3 text-xs font-bold uppercase tracking-wide text-ink-soft">Your commitment</p>
+      <p className="m-0 mb-3 section-label">Your commitment</p>
       {rows.map(([label, value, cls]) => (
         <div key={label} className="mt-2 flex items-center justify-between first-of-type:mt-0">
           <span className="text-sm text-ink-soft">{label}</span>

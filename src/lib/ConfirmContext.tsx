@@ -48,7 +48,7 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
       {children}
       {pending && (
         <div
-          className="fixed inset-0 z-40 flex items-end justify-center bg-black/40 p-4 sm:items-center"
+          className="fixed inset-0 z-40 flex items-end justify-center bg-green-900/30 p-4 backdrop-blur-[2px] sm:items-center"
           onClick={() => close(false)}
         >
           <div
@@ -56,7 +56,7 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
             aria-modal="true"
             aria-labelledby="confirm-title"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-line bg-paper-raised p-5 shadow-xl"
+            className="sheet-in w-full max-w-sm card p-5 shadow-[0_24px_60px_-20px_rgb(6_56_31/0.45)]"
           >
             <p id="confirm-title" className="m-0 text-base font-bold">
               {pending.title}

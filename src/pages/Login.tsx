@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { AuthLayout } from '../components/AuthLayout'
 import { supabase } from '../lib/supabase'
 
 export function Login() {
@@ -25,35 +26,40 @@ export function Login() {
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6">
-      <div className="mb-8 text-center">
-        <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-700 font-mono text-lg font-bold text-white">
-          ₦
-        </div>
-        <h1 className="m-0 text-xl font-bold">Welcome back</h1>
-        <p className="m-0 mt-1 text-sm text-ink-soft">Log in to your savings circles</p>
-      </div>
-
+    <AuthLayout
+      title="Welcome back"
+      subtitle="Log in to your savings circles"
+      footer={
+        <>
+          New to Adunni?{' '}
+          <Link to="/signup" state={{ from }} className="font-semibold text-green-600">
+            Create an account
+          </Link>
+        </>
+      }
+    >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">Email</span>
+          <span className="mb-1.5 block section-label">Email</span>
           <input
             type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-2xl border border-line bg-paper-raised p-3.5 text-sm outline-none focus:border-green-500"
+            className="field"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">Password</span>
+          <span className="mb-1.5 block section-label">Password</span>
           <input
             type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-2xl border border-line bg-paper-raised p-3.5 text-sm outline-none focus:border-green-500"
+            className="field"
           />
         </label>
 
@@ -62,18 +68,11 @@ export function Login() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-1 w-full rounded-xl bg-green-600 py-3.5 text-sm font-bold text-white hover:bg-green-700 disabled:opacity-50"
+          className="mt-1 w-full rounded-2xl bg-green-600 py-3.5 text-sm font-bold text-white hover:bg-green-700 disabled:opacity-50"
         >
           {loading ? 'Logging in…' : 'Log in'}
         </button>
       </form>
-
-      <p className="mt-6 text-center text-sm text-ink-soft">
-        New to Adunni?{' '}
-        <Link to="/signup" state={{ from }} className="font-semibold text-green-600">
-          Create an account
-        </Link>
-      </p>
-    </div>
+    </AuthLayout>
   )
 }

@@ -56,8 +56,8 @@ export function EditGroup() {
   }
 
   const inputClass =
-    'w-full rounded-2xl border border-line bg-paper-raised p-3.5 text-sm outline-none focus:border-green-500'
-  const labelClass = 'mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft'
+    'field text-sm outline-none focus:border-green-500'
+  const labelClass = 'mb-1.5 block section-label'
 
   return (
     <div>

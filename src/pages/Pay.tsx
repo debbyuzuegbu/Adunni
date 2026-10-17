@@ -93,7 +93,7 @@ export function Pay() {
       </div>
 
       <div className="pt-3 pb-2 text-center">
-        <p className="m-0 text-xs font-bold uppercase tracking-wide text-ink-soft">You're paying</p>
+        <p className="m-0 section-label">You're paying</p>
         <p className="m-0 my-1.5 font-mono text-4xl font-bold tabular-nums">{formatNaira(amount)}</p>
         <p className="m-0 text-xs text-ink-soft">
           to {group.name} · Cycle {group.current_cycle}
@@ -101,7 +101,7 @@ export function Pay() {
         </p>
       </div>
 
-      <p className="mb-2.5 mt-5 text-xs font-bold uppercase tracking-wide text-ink-soft">Pay with</p>
+      <p className="mb-2.5 mt-5 section-label">Pay with</p>
 
       <button type="button" onClick={() => setMethod('wallet')} className={optionClass(method === 'wallet')}>
         <span className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-700">

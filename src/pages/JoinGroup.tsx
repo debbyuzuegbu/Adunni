@@ -40,13 +40,13 @@ export function JoinGroup() {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="block">
-          <span className="mb-1.5 block text-xs font-bold uppercase tracking-wide text-ink-soft">Invite code</span>
+          <span className="mb-1.5 block section-label">Invite code</span>
           <input
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             placeholder="XJ4R9K"
             maxLength={6}
-            className="w-full rounded-2xl border border-line bg-paper-raised p-3.5 text-center font-mono text-lg tracking-[0.3em] outline-none focus:border-green-500"
+            className="field text-center font-mono text-lg tracking-[0.3em] outline-none focus:border-green-500"
           />
         </label>
 

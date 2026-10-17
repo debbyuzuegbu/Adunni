@@ -1,6 +1,7 @@
 import { Home as HomeIcon, Receipt, Settings as SettingsIcon, Users, Wallet } from 'lucide-react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useProfile } from '../hooks/useProfile'
+import { initialsOf } from '../lib/format'
 
 const tabs = [
   { to: '/', label: 'Home', Icon: HomeIcon, end: true },
@@ -10,48 +11,72 @@ const tabs = [
   { to: '/settings', label: 'Settings', Icon: SettingsIcon, end: false },
 ]
 
+function greeting() {
+  const hour = new Date().getHours()
+  if (hour < 12) return 'Good morning'
+  if (hour < 17) return 'Good afternoon'
+  return 'Good evening'
+}
+
 export function AppShell() {
   const { data: profile } = useProfile()
-  const fullName = profile?.full_name || 'there'
-  const initials = fullName
-    .split(' ')
-    .map((part) => part[0])
-    .join('') || '?'
+  const location = useLocation()
+  const firstName = profile?.full_name?.trim().split(' ')[0] || 'there'
 
   return (
-    <div className="mx-auto flex h-screen max-w-md flex-col overflow-hidden bg-paper-raised shadow-sm">
-      <header className="shrink-0 bg-green-700 px-5 pb-4 pt-8 text-white">
-        <div className="flex items-start justify-between">
+    <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-paper sm:my-6 sm:h-[calc(100dvh-3rem)] sm:rounded-[2rem] sm:border sm:border-line sm:shadow-[0_30px_80px_-30px_rgb(6_56_31/0.35)]">
+      <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-green-700 to-green-900 px-5 pb-6 pt-7 text-white">
+        <div className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-white/[0.06]" />
+        <div className="pointer-events-none absolute -bottom-20 right-16 h-36 w-36 rounded-full bg-gold-500/10" />
+        <div className="relative flex items-center justify-between">
           <div>
-            <p className="m-0 text-xs opacity-80">Welcome back</p>
-            <p className="m-0 text-base font-bold">{fullName}</p>
+            <p className="m-0 text-xs font-medium text-white/70">{greeting()},</p>
+            <p className="m-0 text-lg font-bold tracking-tight">{firstName} 👋</p>
           </div>
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-500 text-xs font-extrabold text-green-900">
-            {initials}
-          </div>
+          <Link
+            to="/settings"
+            aria-label="Profile"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-sm font-extrabold text-green-900 ring-4 ring-white/10"
+          >
+            {initialsOf(profile?.full_name)}
+          </Link>
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto bg-paper px-4 pb-24 pt-4">
-        <Outlet />
+      <main className="-mt-3 flex-1 overflow-y-auto rounded-t-[1.5rem] bg-paper px-4 pb-6 pt-5">
+        <div key={location.pathname} className="page-in">
+          <Outlet />
+        </div>
       </main>
 
-      <nav className="flex shrink-0 border-t border-line bg-paper-raised">
-        {tabs.map(({ to, label, Icon, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) =>
-              `flex-1 py-2.5 pb-3.5 text-center text-[0.66rem] font-semibold outline-none focus-visible:bg-green-50 ${
-                isActive ? 'text-green-600' : 'text-ink-soft'
-              }`
-            }
-          >
-            <Icon size={18} className="mx-auto mb-0.5" strokeWidth={2} />
-            {label}
-          </NavLink>
-        ))}
+      <nav className="shrink-0 border-t border-line/70 bg-paper-raised/95 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5 backdrop-blur">
+        <div className="flex">
+          {tabs.map(({ to, label, Icon, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) =>
+                `group flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-[0.66rem] font-semibold outline-none ${
+                  isActive ? 'text-green-700' : 'text-ink-soft/80 hover:text-ink'
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <span
+                    className={`flex h-7 w-12 items-center justify-center rounded-full transition-colors ${
+                      isActive ? 'bg-green-100' : 'group-hover:bg-paper'
+                    }`}
+                  >
+                    <Icon size={18} strokeWidth={isActive ? 2.4 : 2} />
+                  </span>
+                  {label}
+                </>
+              )}
+            </NavLink>
+          ))}
+        </div>
       </nav>
     </div>
   )

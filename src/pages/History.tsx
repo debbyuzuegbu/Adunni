@@ -18,11 +18,11 @@ export function History() {
   return (
     <div>
       <div className="mb-4 grid grid-cols-2 gap-2.5">
-        <div className="rounded-2xl border border-line bg-paper-raised p-3.5">
+        <div className="card p-3.5">
           <p className="m-0 text-xs text-ink-soft">Paid</p>
           <p className="m-0 font-mono text-lg font-bold text-green-600">{formatNaira(paidTotal)}</p>
         </div>
-        <div className="rounded-2xl border border-line bg-paper-raised p-3.5">
+        <div className="card p-3.5">
           <p className="m-0 text-xs text-ink-soft">Outstanding</p>
           <p className="m-0 font-mono text-lg font-bold">{formatNaira(outstandingTotal)}</p>
         </div>
@@ -51,8 +51,8 @@ export function History() {
 
       {outstanding.length > 0 && (
         <>
-          <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-ink-soft">Outstanding</p>
-          <div className="mb-4 rounded-2xl border border-line bg-paper-raised">
+          <p className="mb-2.5 section-label">Outstanding</p>
+          <div className="mb-4 card">
             {outstanding.map((e) => {
               const overdue = daysUntil(e.dueDate) < 0
               return (
@@ -80,8 +80,8 @@ export function History() {
 
       {paid.length > 0 && (
         <>
-          <p className="mb-2.5 text-xs font-bold uppercase tracking-wide text-ink-soft">Paid</p>
-          <div className="rounded-2xl border border-line bg-paper-raised">
+          <p className="mb-2.5 section-label">Paid</p>
+          <div className="card">
             {paid.map((e) => (
               <div key={e.id} className="flex items-center justify-between border-b border-line p-3.5 last:border-b-0">
                 <div>

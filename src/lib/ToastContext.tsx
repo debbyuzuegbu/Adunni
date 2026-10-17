@@ -35,10 +35,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`pointer-events-auto flex w-full max-w-sm items-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold shadow-lg ${
-              toast.kind === 'error'
-                ? 'border-danger/30 bg-paper-raised text-danger'
-                : 'border-green-600/30 bg-paper-raised text-green-700'
+            className={`sheet-in pointer-events-auto flex w-full max-w-sm items-center gap-2.5 rounded-2xl border bg-paper-raised/95 px-4 py-3 text-sm font-semibold shadow-[0_16px_40px_-16px_rgb(6_56_31/0.35)] backdrop-blur ${
+              toast.kind === 'error' ? 'border-danger/25 text-danger' : 'border-green-600/25 text-green-700'
             }`}
           >
             {toast.kind === 'error' ? (

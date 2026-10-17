@@ -10,9 +10,9 @@ import { formatDate, formatNaira, initialsOf } from '../lib/format'
 import { supabase } from '../lib/supabase'
 import { useToast } from '../lib/ToastContext'
 
-const sectionLabel = 'mb-2.5 mt-5 text-xs font-bold uppercase tracking-wide text-ink-soft'
+const sectionLabel = 'mb-2.5 mt-5 section-label'
 const inputClass =
-  'w-full rounded-xl border border-line bg-paper p-3 text-sm outline-none focus:border-green-500 focus:bg-paper-raised'
+  'field text-sm outline-none focus:border-green-500 focus:bg-paper-raised'
 
 export function Settings() {
   const { data: profile, isLoading } = useProfile()
@@ -70,7 +70,7 @@ export function Settings() {
 
   return (
     <div>
-      <div className="flex flex-col items-center rounded-2xl border border-line bg-paper-raised px-4 pb-5 pt-6 text-center">
+      <div className="flex flex-col items-center card px-4 pb-5 pt-6 text-center">
         <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500 text-xl font-extrabold text-green-900">
           {initialsOf(profile.full_name)}
         </div>
@@ -95,7 +95,7 @@ export function Settings() {
 
       <Link
         to="/wallet"
-        className="mt-3 flex items-center gap-3 rounded-2xl bg-gradient-to-br from-green-600 to-green-900 p-4 text-white hover:opacity-95"
+        className="mt-3 flex items-center gap-3 rounded-[1.375rem] bg-gradient-to-br from-green-600 to-green-900 shadow-[0_18px_40px_-18px_rgb(6_56_31/0.6)] p-4 text-white hover:opacity-95"
       >
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
           <Wallet size={18} />
@@ -163,7 +163,7 @@ export function Settings() {
           </div>
         </form>
       ) : (
-        <div className="rounded-2xl border border-line bg-paper-raised">
+        <div className="card">
           <DetailRow Icon={User} label="Full name" value={profile.full_name || 'Not set'} />
           <DetailRow Icon={Phone} label="Phone" value={profile.phone || 'Not set'} />
           <DetailRow Icon={Mail} label="Email" value={user?.email ?? ''} />

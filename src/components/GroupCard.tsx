@@ -21,7 +21,7 @@ export function GroupCard({ group, index }: { group: GroupSummary; index: number
   return (
     <Link
       to={`/groups/${group.id}`}
-      className="mb-2.5 flex items-center gap-3 rounded-2xl border border-line bg-paper-raised p-3.5 hover:border-green-500"
+      className="mb-2.5 flex items-center gap-3 card p-3.5 hover:border-green-500"
     >
       <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${bg} ${fg}`}>
         <Icon size={20} strokeWidth={2} />

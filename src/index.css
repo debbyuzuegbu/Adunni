@@ -12,15 +12,18 @@
   --color-gold-500: #f2a93b;
   --color-gold-600: #d98f22;
 
-  --color-ink: #1b1f1c;
-  --color-ink-soft: #4a534d;
-  --color-paper: #faf9f5;
+  --color-ink: #17201b;
+  --color-ink-soft: #5d6862;
+  --color-paper: #f6f5f0;
   --color-paper-raised: #ffffff;
-  --color-line: #e4e2d8;
+  --color-line: #e9e7df;
   --color-danger: #c04a3f;
 
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "SF Mono", Menlo, Consolas, monospace;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(23 32 27 / 0.04), 0 6px 20px -10px rgb(23 32 27 / 0.1);
+  --shadow-lift: 0 2px 4px rgb(23 32 27 / 0.05), 0 14px 32px -12px rgb(23 32 27 / 0.18);
 }
 
 :root {
@@ -30,6 +33,157 @@
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background: var(--color-paper);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgb(23 163 87 / 0.08), transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, rgb(242 169 59 / 0.1), transparent 60%),
+    var(--color-paper);
   color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@layer components {
+  .card {
+    border-radius: 1.125rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-paper-raised);
+    box-shadow: var(--shadow-card);
+  }
+
+  a.card,
+  button.card {
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  a.card:hover,
+  button.card:hover {
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-1px);
+  }
+
+  .field {
+    width: 100%;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-paper-raised);
+    padding: 0.8rem 0.95rem;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .field::placeholder {
+    color: rgb(93 104 98 / 0.55);
+  }
+
+  .field:focus {
+    border-color: var(--color-green-500);
+    box-shadow: 0 0 0 4px rgb(23 163 87 / 0.12);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgb(93 104 98 / 0.85);
+  }
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+button:active:not(:disabled),
+a:active {
+  transform: scale(0.98);
+}
+
+button.bg-green-600,
+a.bg-green-600 {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.15) inset, 0 8px 18px -8px rgb(18 138 74 / 0.6);
+}
+
+button.bg-danger {
+  box-shadow: 0 8px 18px -8px rgb(192 74 63 / 0.55);
+}
+
+button:disabled {
+  box-shadow: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-green-500);
+  outline-offset: 2px;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-green-600);
+  width: 1rem;
+  height: 1rem;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-in {
+  animation: page-in 0.28s ease both;
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sheet-in {
+  animation: sheet-in 0.22s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-in,
+  .sheet-in {
+    animation: none;
+  }
+  button:active:not(:disabled),
+  a:active,
+  a.card:hover,
+  button.card:hover {
+    transform: none;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-paper-raised) inset;
+  transition: background-color 9999s ease-out;
 }
