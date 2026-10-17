@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { GroupCard } from '../components/GroupCard'
 import { useGroups } from '../hooks/useGroups'
 import { daysUntil, describeDue, formatDate, formatNaira } from '../lib/format'
+import { GroupCardsSkeleton } from '../components/Loading'
 
 export function Home() {
   const { data, isLoading, error } = useGroups()
@@ -89,7 +90,7 @@ export function Home() {
 
       <p className="mb-2.5 section-label">Your groups</p>
 
-      {isLoading && <p className="text-sm text-ink-soft">Loading your groups…</p>}
+      {isLoading && <GroupCardsSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your groups. Try again shortly.</p>}
       {!isLoading && !error && groups?.length === 0 && (
         <p className="text-sm text-ink-soft">You haven't joined any circles yet.</p>

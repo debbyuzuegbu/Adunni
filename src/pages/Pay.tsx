@@ -9,6 +9,7 @@ import { useAuth } from '../lib/AuthContext'
 import { describeDue, formatNaira } from '../lib/format'
 import { useToast } from '../lib/ToastContext'
 import type { PaymentMethod } from '../types/database'
+import { PageSkeleton } from '../components/Loading'
 
 const TEST_ACCOUNT = { bank: 'Adunni Test Bank', number: '0123456789', name: 'Adunni Collections' }
 
@@ -28,7 +29,7 @@ export function Pay() {
   const [processing, setProcessing] = useState(false)
 
   if (!data) {
-    return <p className="text-sm text-ink-soft">Loading…</p>
+    return <PageSkeleton />
   }
 
   const { group, members, contributions, currentCycle } = data

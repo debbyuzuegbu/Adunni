@@ -25,7 +25,7 @@ export function AppShell() {
 
   return (
     <div className="mx-auto flex h-[100dvh] max-w-md flex-col overflow-hidden bg-paper sm:my-6 sm:h-[calc(100dvh-3rem)] sm:rounded-[2rem] sm:border sm:border-line sm:shadow-[0_30px_80px_-30px_rgb(6_56_31/0.35)]">
-      <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900 px-5 pb-6 pt-7 text-white">
+      <header className="relative z-10 shrink-0 overflow-hidden rounded-b-[1.75rem] bg-gradient-to-br from-brand-700 to-brand-900 px-5 pb-6 pt-7 text-white shadow-[0_10px_24px_-14px_rgb(6_56_31/0.55)]">
         <div className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-white/[0.06]" />
         <div className="pointer-events-none absolute -bottom-20 right-16 h-36 w-36 rounded-full bg-gold-500/10" />
         <div className="relative flex items-center justify-between">
@@ -43,7 +43,7 @@ export function AppShell() {
         </div>
       </header>
 
-      <main className="-mt-3 flex-1 overflow-y-auto rounded-t-[1.5rem] bg-paper px-4 pb-6 pt-5">
+      <main className="flex-1 overflow-y-auto bg-paper px-4 pb-6 pt-4">
         <div key={location.pathname} className="page-in">
           <Outlet />
         </div>

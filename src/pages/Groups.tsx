@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { GroupCard } from '../components/GroupCard'
 import { useGroups } from '../hooks/useGroups'
 import type { GroupStatus } from '../types/database'
+import { GroupCardsSkeleton } from '../components/Loading'
 
 const filters: { key: 'all' | GroupStatus; label: string }[] = [
   { key: 'all', label: 'All' },
@@ -70,7 +71,7 @@ export function Groups() {
         })}
       </div>
 
-      {isLoading && <p className="text-sm text-ink-soft">Loading your groups…</p>}
+      {isLoading && <GroupCardsSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your groups. Try again shortly.</p>}
       {!isLoading && !error && groups.length === 0 && (
         <p className="text-sm text-ink-soft">

@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import { useGroupDetail } from '../hooks/useGroupDetail'
 import { formatNaira } from '../lib/format'
 import type { PaymentMethod } from '../types/database'
+import { PageSkeleton } from '../components/Loading'
 
 export function PaySuccess() {
   const { groupId } = useParams<{ groupId: string }>()
@@ -10,7 +11,7 @@ export function PaySuccess() {
   const { data } = useGroupDetail(groupId)
 
   if (!data) {
-    return <p className="text-sm text-ink-soft">Loading…</p>
+    return <PageSkeleton />
   }
 
   const { group } = data

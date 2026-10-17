@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContributionHistory } from '../hooks/useContributionHistory'
 import { daysUntil, formatDate, formatNaira } from '../lib/format'
+import { ListSkeleton } from '../components/Loading'
 
 export function History() {
   const { data: entries, isLoading, error } = useContributionHistory()
@@ -43,7 +44,7 @@ export function History() {
         </select>
       )}
 
-      {isLoading && <p className="text-sm text-ink-soft">Loading…</p>}
+      {isLoading && <ListSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your history.</p>}
       {!isLoading && !error && visible.length === 0 && (
         <p className="text-sm text-ink-soft">No contributions yet. They'll show up once a circle starts.</p>

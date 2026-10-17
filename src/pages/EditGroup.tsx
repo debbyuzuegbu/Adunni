@@ -5,6 +5,7 @@ import { useUpdateGroup } from '../hooks/useCircleActions'
 import { useGroupDetail } from '../hooks/useGroupDetail'
 import { useToast } from '../lib/ToastContext'
 import type { ContributionFrequency } from '../types/database'
+import { PageSkeleton } from '../components/Loading'
 
 export function EditGroup() {
   const { groupId } = useParams<{ groupId: string }>()
@@ -26,7 +27,7 @@ export function EditGroup() {
   }, [data])
 
   if (isLoading || !data) {
-    return <p className="text-sm text-ink-soft">Loading…</p>
+    return <PageSkeleton />
   }
 
   const { group, members } = data

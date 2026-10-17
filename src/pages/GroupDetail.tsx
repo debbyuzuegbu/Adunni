@@ -29,6 +29,7 @@ import { useAuth } from '../lib/AuthContext'
 import { useConfirm } from '../lib/ConfirmContext'
 import { useToast } from '../lib/ToastContext'
 import { daysUntil, describeDue, formatDate, formatNaira, initialsOf, todayIso } from '../lib/format'
+import { PageSkeleton } from '../components/Loading'
 
 const sectionLabel = 'mb-2.5 section-label'
 const card = 'card'
@@ -63,7 +64,7 @@ export function GroupDetail() {
   const confirm = useConfirm()
 
   if (isLoading) {
-    return <p className="text-sm text-ink-soft">Loading group…</p>
+    return <PageSkeleton />
   }
 
   if (error || !data) {

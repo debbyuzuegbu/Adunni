@@ -10,6 +10,7 @@ import { formatDate, formatNaira, initialsOf } from '../lib/format'
 import { supabase } from '../lib/supabase'
 import { useTheme, type ThemePreference } from '../lib/ThemeContext'
 import { useToast } from '../lib/ToastContext'
+import { PageSkeleton } from '../components/Loading'
 
 const themeOptions: { value: ThemePreference; label: string; Icon: typeof Sun }[] = [
   { value: 'light', label: 'Light', Icon: Sun },
@@ -69,7 +70,7 @@ export function Settings() {
   }
 
   if (isLoading || !profile) {
-    return <p className="text-sm text-ink-soft">Loading…</p>
+    return <PageSkeleton />
   }
 
   const groups = groupsData?.groups ?? []

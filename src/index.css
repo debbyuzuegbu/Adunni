@@ -212,9 +212,64 @@ input[type="checkbox"] {
   animation: sheet-in 0.22s ease both;
 }
 
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-line) 70%, transparent) 25%,
+    color-mix(in srgb, var(--color-line) 30%, transparent) 50%,
+    color-mix(in srgb, var(--color-line) 70%, transparent) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.splash-ring {
+  animation: splash-ring 1.6s ease-out infinite;
+}
+
+@keyframes splash-ring {
+  from {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.splash-dot {
+  animation: splash-dot 1s ease-in-out infinite;
+}
+
+@keyframes splash-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .page-in,
-  .sheet-in {
+  .sheet-in,
+  .skeleton,
+  .splash-ring,
+  .splash-dot {
     animation: none;
   }
   button:active:not(:disabled),

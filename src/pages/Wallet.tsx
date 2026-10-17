@@ -7,6 +7,7 @@ import { useTopUpWallet, useWalletTransactions } from '../hooks/useWallet'
 import { formatDate, formatNaira } from '../lib/format'
 import { useToast } from '../lib/ToastContext'
 import type { WalletTransactionKind } from '../types/database'
+import { ListSkeleton } from '../components/Loading'
 
 const presets = [5_000, 20_000, 50_000, 100_000]
 
@@ -126,7 +127,7 @@ export function Wallet() {
       )}
 
       <p className="mb-2.5 section-label">Activity</p>
-      {isLoading && <p className="text-sm text-ink-soft">Loading…</p>}
+      {isLoading && <ListSkeleton />}
       {error && <p className="text-sm text-danger">Couldn't load your wallet activity.</p>}
       {!isLoading && !error && transactions?.length === 0 && (
         <p className="text-sm text-ink-soft">No activity yet. Add money to get started.</p>
