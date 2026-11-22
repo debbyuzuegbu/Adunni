@@ -62,6 +62,12 @@ export function Login() {
             className="field"
           />
         </label>
+        <Link
+          to="/forgot-password"
+          className="-mt-2 self-end text-xs font-semibold text-green-600"
+        >
+          Forgot password?
+        </Link>
 
         {error && <p className="m-0 text-sm text-danger">{error}</p>}
 

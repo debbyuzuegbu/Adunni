@@ -3,6 +3,7 @@ import { AppShell } from './components/AppShell'
 import { RequireAuth } from './components/RequireAuth'
 import { CreateGroup } from './pages/CreateGroup'
 import { EditGroup } from './pages/EditGroup'
+import { ForgotPassword } from './pages/ForgotPassword'
 import { GroupDetail } from './pages/GroupDetail'
 import { Groups } from './pages/Groups'
 import { History } from './pages/History'
@@ -12,6 +13,7 @@ import { Login } from './pages/Login'
 import { Notifications } from './pages/Notifications'
 import { Pay } from './pages/Pay'
 import { PaySuccess } from './pages/PaySuccess'
+import { ResetPassword } from './pages/ResetPassword'
 import { Settings } from './pages/Settings'
 import { Signup } from './pages/Signup'
 import { Wallet } from './pages/Wallet'
@@ -21,6 +23,8 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route element={<RequireAuth />}>
         <Route element={<AppShell />}>
